@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CitaPlus</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+  <!-- SPLASH SCREEN -->
+
+<div id="splash">
+
+    <div class="app-icon">
+        📖
+    </div>
+
+    <h1>CitaPlus</h1>
+
+    <p>Une citation pour bien commencer la journée.</p>
+
+</div>
+
+<!-- Bouton paramètres en haut à droite -->
+<button class="settings" onclick="ouvrirParametres()">⚙️</button>
+
+<!-- ACCUEIL -->
+
+<section id="accueil" class="page">
+
+<div class="app-icon">
+    📖
+</div>
+
+<h1 class="titre-app">
+    CitaPlus
+</h1>
+
+<p class="slogan">
+    Une citation pour bien commencer la journée.
+</p>
+
+<div class="bienvenue">
+    <p>
+    Découvrez la sagesse des philosophes,
+    la motivation et l'inspiration chaque jour.
+    </p>
+</div>
+
+<button onclick="ouvrirMenu()">
+Commencer
+</button>
+
+</section>
+
+
+
+<!-- MENU PRINCIPAL -->
+
+<section id="menu" class="page cache">
+
+<h1>CitaPlus</h1>
+
+<button onclick="ouvrirPhilosophes()">
+🏛️ Philosophes
+</button>
+
+<button onclick="ouvrirPopulaires()">
+🌟 Populaires
+</button>
+
+<button onclick="ouvrirQuiz()">
+🧠 Quiz
+</button>
+
+</section>
+
+
+
+<!-- PAGE PHILOSOPHES -->
+
+<section id="philosophes" class="page cache">
+
+<h1>🏛️ Philosophes</h1>
+
+<button onclick="choisirPhilosophe('socrate')">
+Socrate
+</button>
+
+<button onclick="choisirPhilosophe('platon')">
+Platon
+</button>
+
+<button onclick="choisirPhilosophe('aristote')">
+Aristote
+</button>
+
+<button onclick="choisirPhilosophe('confucius')">
+Confucius
+</button>
+
+<button onclick="choisirPhilosophe('camus')">
+Albert Camus
+</button>
+
+</section>
+
+
+
+<!-- PAGE CITATION -->
+
+<section id="lecture" class="page cache">
+
+
+<div class="citation-box">
+
+<p id="citationTexte">
+Citation
+</p>
+
+<h3 id="auteur">
+Auteur
+</h3>
+
+<div class="actions-citation">
+
+<button onclick="ajouterFavori()">
+❤️
+</button>
+
+<button onclick="copierCitation()">
+📋
+</button>
+
+</div>
+
+</div>
+
+<div class="navigation-citation">
+
+<button onclick="citationPrecedente()">
+⬅️ Précédente
+</button>
+
+<button onclick="citationSuivante()">
+Suivante ➡️
+</button>
+
+</div>
+
+<button onclick="retourListe()" class="retour">
+⬅️ Retour
+</button>
+
+</section>
+<!-- PAGE POPULAIRES -->
+
+<section id="populaires" class="page cache">
+
+<h1>🌟 Citations populaires</h1>
+
+<button onclick="choisirCategorie('amour')">
+❤️ Amour
+</button>
+
+<button onclick="choisirCategorie('motivation')">
+💪 Motivation
+</button>
+
+<button onclick="choisirCategorie('reussite')">
+💰 Réussite
+</button>
+
+<button onclick="choisirCategorie('foi')">
+🙏 Foi
+</button>
+
+<button onclick="choisirCategorie('bonheur')">
+😊 Bonheur
+</button>
+
+<button onclick="choisirCategorie('sagesse')">
+📚 Sagesse
+</button>
+
+<button onclick="choisirCategorie('humour')">
+😂 Humour
+</button>
+
+</section>
+
+
+
+
+<!-- PAGE QUIZ -->
+
+<section id="quiz" class="page cache">
+
+<h1>🧠 Quiz</h1>
+
+<p id="question">
+Question
+</p>
+
+<button onclick="reponse1()">
+Réponse 1
+</button>
+
+<button onclick="reponse2()">
+Réponse 2
+</button>
+
+<button onclick="reponse3()">
+Réponse 3
+</button>
+
+<p id="resultat"></p>
+
+</section>
+
+
+
+
+<!-- PAGE PARAMETRES -->
+
+<section id="parametres" class="page cache">
+
+<h1>⚙️ Paramètres</h1>
+
+
+<button onclick="modeSombre()">
+🌙 Mode sombre
+</button>
+
+
+<button onclick="ouvrirFavoris()">
+⭐ Mes favoris
+</button>
+
+<button onclick="partagerApplication()">
+📤 Partager l'application
+</button>
+
+
+<button onclick="ouvrirMiseAJour()">
+📥 Vérifier les mises à jour
+</button>
+<button onclick="ouvrirApropos()">
+ℹ️ À propos
+</button>
+
+<p>
+Développé par : K. ARSENE
+</p>
+
+
+</section>
+
+
+
+
+
+<!-- BARRE DE NAVIGATION -->
+
+<nav class="navigation">
+
+<button onclick="ouvrirPhilosophes()">
+🏛️
+</button>
+
+<button onclick="ouvrirPopulaires()">
+🌟
+</button>
+
+<button onclick="ouvrirQuiz()">
+🧠
+</button>
+
+<button onclick="ouvrirFavoris()">
+⭐ Mes favoris
+</button>
+
+</nav>
+
+
+
+<div id="apropos" class="page cache">
+
+    <button class="retour" onclick="ouvrirMenu()">⬅ Retour</button>
+
+    <h1>ℹ️ À propos</h1>
+
+    <div class="citation-box">
+
+        <h2>CitaPlus</h2>
+
+        <p><b>Version :</b> 1.0</p>
+
+        <p><b>Slogan :</b><br>
+        Une citation pour bien commencer la journée.</p>
+
+        <p>
+        CitaPlus est une application qui permet de lire des citations de philosophes et des citations populaires, même sans connexion Internet.
+        </p>
+
+        
+        <p>
+Notre objectif est d'inspirer, motiver et partager la sagesse à travers les plus belles citations.
+</p>
+
+<p>
+Développé par ARSENE KOUADIO
+</p>
+  
+        
+       
+       
+
+        <p><b>Merci d'utiliser CitaPlus ❤️</b></p>
+
+    </div>
+
+</div>
+
+</section>
+
+<section id="miseajour" class="page cache">
+    <button class="retour" onclick="ouvrirParametres()">
+        ⬅ Retour
+    </button>
+
+    <h1>🔄 Mise à jour</h1>
+
+    <div class="citation-box">
+
+        <h2>CitaPlus Version 1.0</h2>
+
+        <p>✅ Première version de CitaPlus</p>
+
+        <p>✅ Citations de philosophes</p>
+
+        <p>✅ Citations populaires</p>
+
+        <p>✅ Mode sombre</p>
+
+        <p>✅ Système de favoris</p>
+
+        <br>
+
+        <h2>Prochainement</h2>
+
+        <p>⭐ Plus de citations</p>
+
+        <p>⭐ Nouvelles catégories</p>
+
+        <p>⭐ Amélioration de l'application</p>
+
+    </div>
+
+</section>
+<section id="favoris" class="page cache">
+
+    <button class="retour" onclick="ouvrirParametres()">
+        ⬅ Retour
+    </button>
+
+    <h1>⭐ Mes favoris</h1>
+
+    <div id="listeFavoris"></div>
+
+</section>
+<div id="notification"></div>
+<script src="citations.js"></script>
+<script src="script.js"></script>
+
+
+</body>
+</html>

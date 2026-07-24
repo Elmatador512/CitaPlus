@@ -1,0 +1,313 @@
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:white;
+    color:#5b21b6;
+    text-align:center;
+}
+
+
+.page{
+    padding:40px 20px;
+    min-height:80vh;
+}
+
+
+.cache{
+    display:none;
+}
+
+
+.logo{
+    font-size:90px;
+    margin-top:50px;
+}
+
+
+h1{
+    font-size:40px;
+}
+
+
+p{
+    font-size:20px;
+    color:#444;
+}
+
+
+button{
+    width:85%;
+    padding:15px;
+    margin:10px;
+    border:none;
+    border-radius:25px;
+    background:#7c3aed;
+    color:white;
+    font-size:18px;
+}
+
+
+button:active{
+    background:white;
+    color:#7c3aed;
+}
+
+
+.settings{
+    position:fixed;
+    top:15px;
+    right:15px;
+    width:50px;
+    height:50px;
+    padding:5px;
+    border-radius:50%;
+    background:white;
+  color:white;
+    border:2px solid white;
+  
+}
+
+
+.citation-box{
+
+    margin-top:100px;
+    padding:30px;
+    background:#f3e8ff;
+    border-radius:20px;
+
+}
+
+
+#citationTexte{
+
+    font-size:22px;
+    color:#333;
+
+}
+
+
+#auteur{
+
+    color:#7c3aed;
+
+}
+
+
+.navigation{
+
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    display:flex;
+    background:white;
+
+}
+
+
+.navigation button{
+
+    width:25%;
+    height:45px;
+    border-radius:0;
+    margin:0;
+    padding:5px;
+    font-size:15px;
+
+}
+
+
+
+.dark{
+
+    background:#111;
+    color:white;
+
+}
+
+
+.dark p{
+
+    color:white;
+
+}
+
+
+.dark .citation-box{
+
+    background:#333;
+
+}
+
+
+.dark #citationTexte{
+
+    color:white;
+
+}
+.navigation-citation{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+}
+
+.navigation-citation button{
+    width:35%;
+    height:55px;
+    padding:5px;
+    font-size:16px;
+}
+
+.citation-box{
+    position:relative;
+}
+
+
+.actions-citation{
+    display:flex;
+    justify-content:flex-end;
+    gap:15px;
+    margin-top:20px;
+}
+
+
+.actions-citation button{
+    width:45px;
+    height:45px;
+    padding:0;
+    margin:0;
+    background:transparent;
+    color:#7c3aed;
+    font-size:25px;
+}
+.retour{
+    background:white;
+    color:#7c3aed;
+    border:2px solid white;
+    width:120px;
+    margin-bottom:20px;
+}
+#notification{
+    position:fixed;
+    bottom:327px;
+    left:30%;
+    transform:translateX(-50%);
+    color:black;
+    padding:12px 25px;
+    border-radius:25px;
+    font-size:18px;
+    display:none;
+    z-index:1000;
+}
+
+/* Animation des citations */
+.citation-box{
+    animation: apparition 0.5s ease;
+}
+
+
+@keyframes apparition{
+
+from{
+    opacity:0;
+    transform:translateY(20px);
+}
+
+to{
+    opacity:1;
+    transform:translateY(0);
+}
+
+}
+/* Effet des boutons au toucher */
+button{
+    transition:0.2s;
+}
+
+
+button:active{
+    transform:scale(0.95);
+}
+
+/* Redecendre le bouton commencer */
+#accueil button{
+    margin-top:20px;
+}
+/* Position du slogan et du texte d'accueil */
+
+.slogan{
+    margin-top:15px;
+    margin-bottom:15px;
+
+}
+
+.app-icon{
+    width:130px;
+    height:130px;
+    margin:25px auto 25px;
+    border-radius:35px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:90px;
+}
+
+.bienvenue{
+    margin:30px 20px;
+    padding:3px;
+    background:#f3e8ff;
+    border-radius:20px;
+    color:#111827;
+}
+#menu button{
+    margin-top:40px;
+    margin-bottom:20px;
+}
+/* Splash Screen */
+
+#splash{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+#splash h1{
+    color:#7c3aed;
+    margin-top:20px;
+}
+
+#splash p{
+    color:#666;
+}
+
+#splash.disparaitre{
+    opacity:0;
+    transition:opacity 0.6s;
+    pointer-events:none;
+}
+/* Animation du logo */
+
+#splash .app-icon{
+    animation: logoAnime 1.1s infinite alternate;
+}
+
+@keyframes logoAnime{
+
+0%{
+    transform:scale(1) rotate(0deg);
+}
+
+100%{
+    transform:scale(1.12) rotate(5deg);
+}
+
+}
