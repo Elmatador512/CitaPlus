@@ -14,11 +14,22 @@ jobs:
       - name: Télécharger le projet
         uses: actions/checkout@v4
 
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
       - name: Installer Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 21
+
+      - name: Installer les dépendances
+        run: npm install
+
+      - name: Synchroniser Capacitor
+        run: npx cap sync android
 
       - name: Donner les permissions
         run: chmod +x android/gradlew
