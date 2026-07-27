@@ -1,44 +1,31 @@
 # 📖 CitaPlus
 
-
-> Une citation pour bien commencer la journée.
-
-## 🌟 Présentation
-
-CitaPlus est une application mobile de citations qui permet de découvrir des phrases inspirantes de philosophes, personnalités et différentes catégories.
-
-L'application fonctionne hors connexion et propose une expérience simple, rapide et agréable.
+**CitaPlus** est une application de citations inspirantes qui permet de découvrir chaque jour des phrases de grands philosophes et des citations classées par thème.
 
 ## ✨ Fonctionnalités
 
-- 📚 Citations de philosophes
-- ❤️ Citations populaires par catégories
-- ⭐ Ajout des citations favorites
+- 📚 Citations de philosophes célèbres
+- ❤️ Citations populaires (Amour, Motivation, Réussite, Foi, Bonheur, Sagesse, Humour)
+- ⭐ Ajout aux favoris
 - 📋 Copie des citations
-- 🔄 Navigation entre les citations
-- 📱 Fonctionnement sans Internet
-
-## 📂 Catégories disponibles
-
-- ❤️ Amour
-- 💪 Motivation
-- 💰 Réussite
-- 🙏 Foi
-- 😊 Bonheur
-- 📚 Sagesse
-- 😂 Humour
+- ➡️ Navigation entre les citations
+- 📱 Fonctionne hors ligne
 
 ## 🛠️ Technologies utilisées
 
-- HTML
-- CSS
+- HTML5
+- CSS3
 - JavaScript
 - Capacitor
-- Android
 
-## 🚀 Installation
+## 🎯 Objectif
 
-Clonez le projet :
+Offrir une application simple, rapide et élégante pour lire des citations inspirantes à tout moment.
 
-```bash
-git clone https://github.com/Elmatador512/CitaPlus.git
+## 👨‍💻 Auteur
+
+**Arsene Kouadio**
+
+## 📄 Licence
+
+Projet open source à des fins éducatives.
