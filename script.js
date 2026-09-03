@@ -2,6 +2,41 @@ let listeActuelle = [];
 let indexCitation = 0;
 let nomAuteur = "";
 let favoris = [];
+let pagePrecedente = "menu";
+let points = Number(localStorage.getItem("points")) || 20;
+function afficherPoints(){
+
+    document.getElementById("points").innerHTML = points;
+
+}
+function ajouterPoints(nombre){
+
+    points += nombre;
+
+    localStorage.setItem("points", points);
+
+    afficherPoints();
+
+}
+function retirerPoints(nombre){
+
+    if(points >= nombre){
+
+        points -= nombre;
+
+        localStorage.setItem("points", points);
+
+        afficherPoints();
+
+        return true;
+
+    }
+
+    return false;
+
+}
+
+
 
 
 // Cacher toutes les pages
@@ -13,8 +48,6 @@ page.classList.add("cache");
 });
 
 }
-
-
 
 // Accueil vers menu
 
@@ -29,8 +62,6 @@ document.getElementById("menu").classList.remove("cache");
 },50);
 
 }
-
-
 
 // Ouvrir philosophes
 
@@ -278,6 +309,7 @@ document.getElementById("parametres").classList.remove("cache");
 // Favoris
 
 function ouvrirFavoris(){
+  pagePrecedente = document.querySelector(".page:not(.cache)").id;
 
 cacherPages();
 
@@ -583,6 +615,30 @@ afficherNotification("Texte de partage copié ✅");
 
 }
 // Retour automatique à l'accueil au démarrage
+function retourFavoris(){
+
+    cacherPages();
+
+    document.getElementById(pagePrecedente).classList.remove("cache");
+
+}
+function verifierBonusJournalier(){
+
+    let aujourd'hui = new Date().toDateString();
+    let dernierBonus = localStorage.getItem("dernierBonus");
+
+    if(dernierBonus !== aujourd'hui){
+
+        ajouterPoints(2);
+
+        localStorage.setItem("dernierBonus", aujourd'hui);
+
+        afficherNotification("🎁 Bonus quotidien : +2 🪙");
+       }
+}
+
+
+
 
 window.onload = function(){
 
@@ -590,18 +646,38 @@ window.onload = function(){
 
     document.getElementById("accueil").classList.remove("cache");
 
-    setTimeout(function(){
+    afficherPoints();
 
-        let splash = document.getElementById("splash");
+    let splash = document.getElementById("splash");
 
-        splash.classList.add("disparaitre");
+    if(splash){
 
         setTimeout(function(){
 
-            splash.style.display = "none";
+            splash.classList.add("disparaitre");
 
-        },600);
+            setTimeout(function(){
 
-    },2000);
+                splash.style.display = "none";
+
+            },600);
+
+        },2000);
+
+    }
 
 };
+    function ouvrirPoints(){
+
+    let choix = confirm(
+        "🎥 Regarder une publicité et gagner 10 points ?"
+    );
+
+    if(choix){
+
+        ajouterPoints(10);
+
+        afficherNotification("🎉 +10 points gagnés !");
+    }
+
+}

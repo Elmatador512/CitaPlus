@@ -11,6 +11,14 @@
 </head>
 
 <body>
+  <div id="compteurPoints">
+🪙 <span id="points">20</span>
+
+<button id="btnPoints" onclick="ouvrirPoints()">
+➕
+</button>
+
+</div>
   <!-- SPLASH SCREEN -->
 
 <div id="splash">
@@ -37,8 +45,7 @@
 </div>
 
 <h1 class="titre-app">
-    CitaPlus
-</h1>
+    CitaPlus</h1>
 
 <p class="slogan">
     Une citation pour bien commencer la journée.
@@ -326,7 +333,6 @@ Développé par ARSENE KOUADIO
 
 </div>
 
-</section>
 
 <section id="miseajour" class="page cache">
     <button class="retour" onclick="ouvrirParametres()">
@@ -364,7 +370,7 @@ Développé par ARSENE KOUADIO
 </section>
 <section id="favoris" class="page cache">
 
-    <button class="retour" onclick="ouvrirParametres()">
+    <button class="retour" onclick="retourFavoris()">
         ⬅ Retour
     </button>
 
@@ -374,9 +380,9 @@ Développé par ARSENE KOUADIO
 
 </section>
 <div id="notification"></div>
+
 <script src="citations.js"></script>
+
 <script src="script.js"></script>
-
-
 </body>
 </html>
