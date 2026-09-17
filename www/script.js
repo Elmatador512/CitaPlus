@@ -1613,7 +1613,14 @@ function ouvrirPoints() {
 
 document.addEventListener(
     "DOMContentLoaded",
-    function() {
+    async function() {
+
+        try {
+            await AdMob.initialize();
+            console.log("AdMob initialisé");
+        } catch (error) {
+            console.error("Erreur initialisation AdMob :", error);
+        }
 
         afficherPoints();
 
