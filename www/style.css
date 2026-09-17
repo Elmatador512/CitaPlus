@@ -6,10 +6,10 @@ body{
     text-align:center;
 }
 
-
 .page{
-    padding:40px 20px;
+    padding:10px 20px 90px;
     min-height:80vh;
+    box-sizing:border-box;
 }
 
 
@@ -206,23 +206,9 @@ button:active{
     animation: apparition 0.5s ease;
 }
 
-
-@keyframes apparition{
-
-from{
-    opacity:0;
-    transform:translateY(20px);
-}
-
-to{
-    opacity:1;
-    transform:translateY(0);
-}
-
-}
 /* Effet des boutons au toucher */
 button{
-    transition:0.2s;
+    transition:0.3s;
 }
 
 
@@ -266,69 +252,486 @@ button:active{
 }
 /* Splash Screen */
 
-#splash{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:white;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    z-index:9999;
-}
-
-#splash h1{
-    color:#7c3aed;
-    margin-top:20px;
-}
-
-#splash p{
-    color:#666;
-}
-
-#splash.disparaitre{
-    opacity:0;
-    transition:opacity 0.6s;
-    pointer-events:none;
-}
 /* Animation du logo */
+/* ================================
+   BARRE DU HAUT
+================================ */
 
-#splash .app-icon{
-    animation: logoAnime 1.7s infinite alternate;
-}
-
-@keyframes logoAnime{
-
-0%{
-    transform:scale(1) rotate(0deg);
-}
-
-100%{
-    transform:scale(1.12) rotate(5deg);
-}
-
-}
 #compteurPoints{
-    position: fixed;
-    top: 5px;
-    right: 280px;
-    z-index: 9999;
-    background: #7c3aed;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-weight: bold;
+    position:fixed;
+    top:10px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:9999;
+
+    background:#7c3aed;
+    color:white;
+
+    padding:8px 14px;
+    border-radius:20px;
+
+    font-weight:bold;
+    font-size:17px;
+
+    white-space:nowrap;
 }
+
+/* Bouton + des points */
+#btnPoints{
+    margin-left:6px;
+    border:none;
+    border-radius:50%;
+
+    width:28px;
+    height:28px;
+
+    padding:0;
+    margin-top:0;
+
+    background:white;
+    color:#7c3aed;
+
+    font-size:18px;
+    font-weight:bold;
+}
+
+/* BOUTON RETOUR GLOBAL */
+#boutonRetourGlobal{
+    position:fixed;
+    top:10px;
+    left:10px;
+    z-index:10000;
+
+    width:1.5cm;
+    height:0.5cm;
+
+    padding:0;
+    margin:0;
+
+    border-radius:5px;
+    background:white;
+    color:#7c3aed;
+    border:2px solid #7c3aed;
+
+    font-size:10px;
+    font-weight:bold;
+    line-height:1;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    white-space:nowrap;
+}
+/* Paramètres à droite */
+.settings{
+    position:fixed;
+    top:10px;
+    right:10px;
+
+    z-index:10000;
+
+    width:48px;
+    height:48px;
+
+    padding:0;
+    margin:0;
+
+    border-radius:50%;
+
+    background:white;
+    color:#7c3aed;
+
+    border:2px solid #7c3aed;
+
+    font-size:22px;
+}
+
+
+/* Bouton + des points */
 #btnPoints{
     margin-left:8px;
     border:none;
     border-radius:50%;
+
     width:28px;
     height:28px;
+
     cursor:pointer;
+
     font-size:18px;
     font-weight:bold;
+}
+
+
+/* ================================
+   CARTES DES PHILOSOPHES
+================================ */
+.philosophe-card{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    text-align:left;
+
+    width:90%;
+    margin:12px auto;
+    padding:18px;
+
+    background:#f3e8ff;
+    color:#5b21b6;
+
+    border-radius:18px;
+
+    border:2px solid transparent;
+
+    box-sizing:border-box;
+}
+
+
+.philosophe-card:active{
+    transform:scale(0.97);
+}
+
+
+.philosophe-nom{
+    font-size:20px;
+    font-weight:bold;
+}
+
+
+.philosophe-info{
+    margin-top:6px;
+    font-size:14px;
+    color:#666;
+}
+
+
+.philosophe-card.verrouille{
+    opacity:0.65;
+    background:#eeeeee;
+    color:#555;
+}
+
+
+/* ================================
+   LISTE DES CITATIONS
+================================ */
+
+.citation-liste{
+    width:92%;
+    margin:12px auto;
+
+    padding:18px;
+
+    box-sizing:border-box;
+
+    background:#f3e8ff;
+
+    border-radius:18px;
+
+    text-align:left;
+
+    transition:0.2s;
+}
+
+
+.citation-liste:active{
+    transform:scale(0.97);
+}
+
+
+.numero-citation{
+    display:inline-flex;
+
+    width:30px;
+    height:30px;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#7c3aed;
+    color:white;
+
+    font-weight:bold;
+}
+
+
+.texte-citation-liste{
+    margin-top:12px;
+
+    font-size:18px;
+
+    line-height:1.5;
+
+    color:#333;
+}
+
+
+.etat-citation{
+    margin-top:10px;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    color:#7c3aed;
+}
+
+
+.citation-liste.verrouille{
+    background:#eeeeee;
+    opacity:0.7;
+}
+
+
+.citation-liste.verrouille
+.texte-citation-liste{
+    color:#555;
+}
+
+
+/* ================================
+   MODALE
+================================ */
+
+.modal{
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,0.55);
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    z-index:10000;
+
+    padding:20px;
+
+    box-sizing:border-box;
+}
+
+
+.modal-contenu{
+    width:90%;
+    max-width:400px;
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:25px;
+
+    box-sizing:border-box;
+
+    box-shadow:0 10px 40px rgba(0,0,0,0.25);
+
+    animation:modalApparition 0.25s ease;
+}
+
+
+.modal-contenu h2{
+    color:#5b21b6;
+}
+
+
+.modal-contenu p{
+    font-size:17px;
+    line-height:1.5;
+}
+
+
+.modal-contenu button{
+    width:100%;
+    margin:8px 0;
+}
+
+
+.btnAnnuler{
+    background:#eeeeee !important;
+    color:#555 !important;
+}
+
+
+/* ================================
+   ANIMATION MODALE
+================================ */
+
+
+/* ================================
+   MODE SOMBRE
+================================ */
+
+.dark .philosophe-card{
+    background:#292929;
+    color:white;
+}
+
+
+.dark .philosophe-info{
+    color:#bbb;
+}
+
+
+.dark .philosophe-card.verrouille{
+    background:#222;
+    color:#aaa;
+}
+
+
+.dark .citation-liste{
+    background:#292929;
+}
+
+
+.dark .texte-citation-liste{
+    color:white;
+}
+
+
+.dark .citation-liste.verrouille{
+    background:#222;
+}
+
+
+.dark .modal-contenu{
+    background:#222;
+    color:white;
+}
+
+
+.dark .modal-contenu h2{
+    color:#c084fc;
+}
+
+
+.dark .modal-contenu p{
+    color:white;
+}
+/* ================================
+   SPLASH SCREEN CITAPLUS
+================================ */
+
+#splash{
+    position:fixed;
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  
+    align-items:center;
+    z-index:99999;
+
+    /* Très important */
+    pointer-events:none;
+
+    animation:splashDisparition 3s ease forwards;
+}
+
+
+/* Logo */
+
+#splash .app-icon{
+    animation:logoAnime 1.7s ease-out forwards;
+}
+
+
+/* Apparition du logo */
+@keyframes logoAnime{
+
+    0%{
+        opacity:0;
+        transform:scale(0.6) rotate(0deg);
+    }
+
+    50%{
+        opacity:1;
+        transform:scale(1.12) rotate(5deg);
+    }
+
+    100%{
+        opacity:1;
+        transform:scale(1) rotate(0deg);
+    }
+
+}
+
+
+/* Disparition complète du splash */
+
+@keyframes splashDisparition{
+
+    0%{
+        opacity:1;
+        visibility:visible;
+    }
+
+    75%{
+        opacity:1;
+        visibility:visible;
+    }
+
+    100%{
+        opacity:0;
+        visibility:hidden;
+    }
+
+}
+/* ================================
+   RÉGLAGE ACCUEIL — CITAPLUS
+   ================================ */
+
+/* LOGO */
+#accueil .app-icon{
+    margin-top: 0px;
+    margin-bottom: 15px;
+    font-size: 90px;
+}
+
+/* TITRE CITAPLUS */
+#accueil h1{
+    margin-top: 0px;
+    margin-bottom: 15px;
+    font-size: 32px;
+}
+
+/* SLOGAN */
+#accueil .slogan{
+    margin-top: 0px;
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+
+/* BLOC DE PRÉSENTATION */
+#accueil .bienvenue{
+    margin-top: 0px;
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+
+/* BOUTON COMMENCER */
+#accueil button:not(#boutonPremium){
+    margin-top: 0px;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+/* BOUTON PREMIUM */
+#accueil #boutonPremium{
+    margin-top: 0px;
+    font-size: 18px;
 }
