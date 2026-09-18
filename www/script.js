@@ -1615,13 +1615,6 @@ document.addEventListener(
     "DOMContentLoaded",
     async function() {
 
-        try {
-            await AdMob.initialize();
-            console.log("AdMob initialisé");
-        } catch (error) {
-            console.error("Erreur initialisation AdMob :", error);
-        }
-
         afficherPoints();
 
         // Restaurer le mode sombre
