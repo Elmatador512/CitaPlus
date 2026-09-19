@@ -1613,7 +1613,7 @@ function ouvrirPoints() {
 
 document.addEventListener(
     "DOMContentLoaded",
-    async function() {
+    function() {
 
         afficherPoints();
 
