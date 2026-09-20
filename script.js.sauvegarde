@@ -1576,7 +1576,7 @@ function verifierBonusJournalier() {
 
     if (dernierBonus !== aujourdHui) {
 
-        ajouterPoints(3);
+        ajouterPoints(2);
 
         localStorage.setItem(
             "dernierBonus",
@@ -1584,7 +1584,7 @@ function verifierBonusJournalier() {
         );
 
         afficherNotification(
-            "🎁 Bonus quotidien : +3 🪙"
+            "🎁 Bonus quotidien : +2 🪙"
         );
     }
 }
@@ -1641,60 +1641,3 @@ document.addEventListener(
 
     }
 );
-/* ===== LEVELPLAY CITAPLUS ===== */
-
-const CITAPLUS_LEVELPLAY_APP_KEY = "263803aa5";
-const CITAPLUS_REWARDED_ID = "pz9qyhy9o5w4f5nl";
-const CITAPLUS_INTER_ID = "eoqhcju0i13lokda";
-const CITAPLUS_BANNER_ID = "q72hgq9baglmgsg9";
-
-async function initialiserLevelPlay() {
-    try {
-        const LP = window?.LevelPlayAds;
-
-        if (!LP) {
-            console.log("LevelPlay non disponible");
-            return;
-        }
-
-        await LP.requestConsentInfo();
-
-            await LP.addListener("onRewardedAdRewarded", () => { ajouterPoints(10); afficherNotification("🎁 Vidéo récompensée : +10 🪙"); });
-        await LP.initialize({
-            appKey: CITAPLUS_LEVELPLAY_APP_KEY,
-            isTesting: false
-        });
-
-        await LP.loadRewarded({
-            adUnitId: CITAPLUS_REWARDED_ID
-        });
-
-        await LP.loadInterstitial({
-            adUnitId: CITAPLUS_INTER_ID
-        });
-
-        await LP.createBanner({
-            adUnitId: CITAPLUS_BANNER_ID,
-            adSize: "BANNER",
-            position: "BOTTOM",
-            isAutoShow: true,
-            isOverlap: false
-        });
-
-        console.log("✅ LevelPlay initialisé");
-
-    } catch (e) {
-        console.error("❌ LevelPlay :", e);
-    }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    setTimeout(initialiserLevelPlay, 1000);
-});
-
-
-async function regarderPubPourPoints() {
-    const LP = window?.LevelPlayAds;
-    if (!LP) return;
-    await LP.showRewarded();
-}

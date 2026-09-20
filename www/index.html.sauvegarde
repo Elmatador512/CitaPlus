@@ -19,7 +19,7 @@
 <!-- COMPTEUR DE POINTS -->
 <div id="compteurPoints">
     🪙 <span id="points">20</span>
-    <button id="btnPoints" onclick="regarderPubPourPoints()">➕</button>
+    <button id="btnPoints" onclick="ouvrirPoints()">➕</button>
 </div>
 
 
@@ -74,9 +74,9 @@
         🏛️ Philosophes
     </button>
 
-    <button onclick="ouvrirMessages()">
-    ❤️ Messages touchants
-</button>
+    <button onclick="ouvrirPopulaires()">
+        🌟 Populaires
+    </button>
 
     <button onclick="ouvrirQuiz()">
         🧠 Quiz
@@ -112,16 +112,6 @@
 
 </section>
 
-<!-- LISTE DES MESSAGES -->
-<section id="listeMessages" class="page cache">
-
-    <h1 id="titreListeMessages">
-        ❤️ Messages
-    </h1>
-
-    <div id="listeMessagesContainer"></div>
-
-</section>
 
 <!-- LECTEUR DE CITATION -->
 <section id="lecture" class="page cache">
@@ -168,92 +158,38 @@
 
 </section>
 
-<!-- MESSAGES TOUCHANTS -->
-<section id="messages" class="page cache">
 
-    <h1>❤️ Messages touchants</h1>
+<!-- POPULAIRES -->
+<section id="populaires" class="page cache">
 
-    <button onclick="choisirCategorieMessage('amour')">
+    <h1>🌟 Citations populaires</h1>
+
+    <button onclick="choisirCategorie('amour')">
         ❤️ Amour
     </button>
-        
-        <button onclick="choisirCategorieMessage('seduction')">
-        💘 Seduction
-    </button>
 
-
-
-    <button onclick="choisirCategorieMessage('rupture')">
-        💔 Rupture
-    </button>
-
-    <button onclick="choisirCategorieMessage('touchants')">
-        🥹 Messages touchants
-    </button>
-
-    <button onclick="choisirCategorieMessage('tristesse')">
-        😢 Tristesse
-    </button>
-
-    <button onclick="choisirCategorieMessage('pardon')">
-        🙏 Pardon
-    </button>
-
-    <button onclick="choisirCategorieMessage('amitie')">
-        🫂 Amitié
-    </button>
-
-    <button onclick="choisirCategorieMessage('famille')">
-        👨‍👩‍👧 Famille
-    </button>
-
-    <button onclick="choisirCategorieMessage('motivation')">
+    <button onclick="choisirCategorie('motivation')">
         💪 Motivation
     </button>
 
-    <button onclick="choisirCategorieMessage('bonne_nuit')">
-        🌹 Bonne nuit
+    <button onclick="choisirCategorie('reussite')">
+        💰 Réussite
     </button>
 
-    <button onclick="choisirCategorieMessage('bonjour')">
-        ☀️ Bonjour
+    <button onclick="choisirCategorie('foi')">
+        🙏 Foi
     </button>
 
-    <button onclick="choisirCategorieMessage('anniversaire')">
-        🎂 Anniversaire
+    <button onclick="choisirCategorie('bonheur')">
+        😊 Bonheur
     </button>
 
-    <button onclick="choisirCategorieMessage('declaration')">
-        💌 Déclaration d’amour
+    <button onclick="choisirCategorie('sagesse')">
+        📚 Sagesse
     </button>
 
-    <button onclick="choisirCategorieMessage('deception')">
-        😔 Déception
-    </button>
-
-    <button onclick="choisirCategorieMessage('reconfort')">
-        🤗 Réconfort
-    </button>
-
-    <button onclick="choisirCategorieMessage('humour')">
+    <button onclick="choisirCategorie('humour')">
         😂 Humour
-    </button>
-
-    <button onclick="choisirCategorieMessage('colere')">
-        😡 Colère / reproches
-    </button>
-    
-    
-    <button onclick="choisirCategorieMessage('insultes')">
-        🖕 Insultes
-    </button>
-
-    <button onclick="choisirCategorieMessage('couple')">
-        💍 Couple
-    </button>
-
-    <button onclick="choisirCategorieMessage('nostalgie')">
-        ❤️‍🩹 Manque / nostalgie
     </button>
 
 </section>
@@ -368,23 +304,20 @@
         <h2>CitaPlus Version 2.0</h2>
 
         <p>✅ Citations de philosophes</p>
-        <p>✅ Messages touchants</p>
+        <p>✅ Citations populaires</p>
         <p>✅ Mode sombre</p>
         <p>✅ Système de favoris</p>
         <p>✅ Système de points</p>
-        <p>✅ Bonus quotidien 🎁</p>
 
         <br>
 
         <h2>Prochainement</h2>
 
-        <p>⭐ Récompenses vidéo</p>
-        <p>⭐ Système Premium</p>
         <p>⭐ Plus de philosophes</p>
-        <p>⭐ Plus de citations et messages</p>
-        <p>⭐ Améliorations et corrections</p>
-        <p>⭐ Auteurs de romans, œuvres et résumés de leus œuvres</p>
-<p>⭐ Poètes,œuvres et un résumé de leurs œuvres</p>
+        <p>⭐ Plus de citations</p>
+        <p>⭐ Récompenses vidéo</p>
+        <p>⭐ Améliorations</p>
+
     </div>
 
 </section>
@@ -408,8 +341,8 @@
         🏛️
     </button>
 
-    <button onclick="ouvrirMessages()">
-        ❤️
+    <button onclick="ouvrirPopulaires()">
+        🌟
     </button>
 
     <button onclick="ouvrirQuiz()">
@@ -419,9 +352,7 @@
     <button onclick="ouvrirFavoris()">
         ⭐
     </button>
-   <button onclick="bonusQuotidien()">
-        🎁
-    </button>
+
 </nav>
 
 
@@ -436,8 +367,6 @@
 console.log("CitaPlus : JavaScript chargé");
 </script>
 <script src="citations.js"></script>
-<script src="capacitor.js"></script>
-<script src="levelplay.js"></script>
 <script src="script.js"></script>
 
 </body>
