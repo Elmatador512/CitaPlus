@@ -1616,6 +1616,7 @@ document.addEventListener(
     function() {
 
         afficherPoints();
+        verifierBonusJournalier();
 
         // Restaurer le mode sombre
         if (
@@ -1709,4 +1710,31 @@ function ouvrirMessages() {
         page.classList.remove("cache");
     }
 }
+
+
+function choisirCategorieMessage(categorie) {
+
+    if (
+        typeof messages === "undefined" ||
+        !messages[categorie]
+    ) {
+
+        afficherNotification(
+            "Cette catégorie sera bientôt disponible."
+        );
+
+        return;
+    }
+
+    listeActuelle = messages[categorie];
+
+    indexCitation = 0;
+
+    nomAuteur = categorie;
+
+    afficherCitation();
+
+    cacherPages("lecture");
+}
+
 
