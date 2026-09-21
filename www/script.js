@@ -1698,3 +1698,15 @@ async function regarderPubPourPoints() {
     if (!LP) return;
     await LP.showRewarded();
 }
+
+function ouvrirMessages() {
+
+    cacherPages("messages");
+
+    const page = document.getElementById("messages");
+
+    if (page) {
+        page.classList.remove("cache");
+    }
+}
+
