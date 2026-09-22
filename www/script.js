@@ -30,18 +30,93 @@ function retourGlobal() {
         page.classList.remove("cache");
     }
 
+    // MESSAGES : retour exactement à la position du message
+    if (
+        pagePrecedente === "listeMessages" &&
+        typeof window.positionRetourMessages !== "undefined"
+    ) {
+
+        let position =
+            window.positionRetourMessages;
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                window.scrollTo(0, position);
+            });
+        });
+
+        return;
+    }
+
+    // CITATIONS
+    if (
+        pagePrecedente === "listeCitations" &&
+        typeof window.positionRetourCitations !== "undefined"
+    ) {
+
+        let position =
+            window.positionRetourCitations;
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                window.scrollTo(0, position);
+            });
+        });
+
+        return;
+    }
+
+    // PHILOSOPHES
+    if (
+        pagePrecedente === "philosophes" &&
+        typeof window.positionRetourPhilosophes !== "undefined"
+    ) {
+
+        let position =
+            window.positionRetourPhilosophes;
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                window.scrollTo(0, position);
+            });
+        });
+
+        return;
+    }
+
+    // CATÉGORIES MESSAGES
+    if (
+        pagePrecedente === "messages" &&
+        typeof window.positionRetourCategoriesMessages !== "undefined"
+    ) {
+
+        let position =
+            window.positionRetourCategoriesMessages;
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                window.scrollTo(0, position);
+            });
+        });
+
+        return;
+    }
+
+    // RETOUR NORMAL
     window.scrollTo(0, 0);
 }
 
+
 // ========================================
-// POINTS
+// COMPORTEMENT NORMAL
 // ========================================
-if (localStorage.getItem("citaPlusVersion") !== "4") {
-    localStorage.removeItem("philosophesDebloques");
-    localStorage.removeItem("citationsDebloquees");
-    localStorage.setItem("points", "20");
-    localStorage.setItem("citaPlusVersion", "4");
-}
+
+window.scrollTo(0, 0);
+
+// ========================================
+// POINTS — TEST AVEC SAUVEGARDE
+// ========================================
+
 let pointsStockes =
     localStorage.getItem("points");
 
@@ -58,11 +133,9 @@ if (
 
     localStorage.setItem(
         "points",
-        points
+        "20"
     );
 }
-
-
 // ========================================
 // PHILOSOPHES DÉBLOQUÉS
 // ========================================
@@ -83,12 +156,13 @@ if (!Array.isArray(philosophesStockes)) {
 }
 
 
-// Les 3 premiers sont gratuits
+// Les 3 premiers sont gratuits + déblocages sauvegardés
 let philosophesDebloques = [
     ...new Set([
         "socrate",
         "platon",
         "aristote",
+        ...philosophesStockes
     ])
 ];
 
@@ -356,29 +430,28 @@ function afficherListePhilosophes() {
         let nomAffiche =
             obtenirNomPhilosophe(nom);
 
-
         let bouton =
             document.createElement("button");
 
         bouton.className =
-            debloque
-                ? "philosophe-card"
-                : "philosophe-card verrouille";
+    debloque
+        ? "philosophe-card"
+        : "philosophe-card verrouille";
 
-bouton.innerHTML = `
-    <span class="philosophe-nom">
-        ${debloque ? "🏛️" : "🔒"}
-        ${nomAffiche}
-    </span>
+        bouton.innerHTML = `
+            <span class="philosophe-nom">
+                ${debloque ? "🏛️" : "🔒"}
+                ${nomAffiche}
+            </span>
 
-    <span class="philosophe-info">
-        ${
-            debloque
-            ? "🔓 Débloqué"
-            : "🔒 20 🪙 pour débloquer"
-        }
-    </span>
-`;
+            <span class="philosophe-info">
+                ${
+                    debloque
+                    ? "🔓 Débloqué"
+                    : "🔒 20 🪙 pour débloquer"
+                }
+            </span>
+        `;
 
         bouton.onclick = function() {
             choisirPhilosophe(nom);
@@ -425,7 +498,6 @@ function obtenirNomPhilosophe(nom) {
     return noms[nom] || nom;
 }
 
-
 // ========================================
 // CHOISIR UN PHILOSOPHE
 // ========================================
@@ -436,13 +508,17 @@ function choisirPhilosophe(nom) {
     }
 
     // Philosophe déjà débloqué
-    if      (philosopheEstDebloque(nom)) {
+    if (
+        philosopheEstDebloque(nom)
+    ) {
+window.positionRetourPhilosophes = window.scrollY;
         ouvrirListeCitations(nom);
+
         return;
     }
 
     // Philosophe verrouillé
-ouvrirModalDeblocagePhilosophe(nom);
+    ouvrirModalDeblocagePhilosophe(nom);
 }
 // ========================================
 // MODALE DE DÉBLOCAGE D'UN PHILOSOPHE
@@ -575,16 +651,17 @@ function fermerModalCitationDeblocage() {
     if (modal) {
         modal.remove();
     }
-}
-
-
+} 
+// ========================================
+// DÉBLOQUER UNE CITATION
+// ========================================
 function debloquerCitation(nom, index) {
 
     if (!philosophes[nom]) {
         return;
     }
 
-    // Vérifier si la citation est déjà débloquée
+    // Citation déjà débloquée
     if (
         citationEstDebloquee(
             nom,
@@ -603,19 +680,23 @@ function debloquerCitation(nom, index) {
     }
 
     // Vérifier les points
-if (points < 10) {
+    if (points < 10) {
 
-    afficherNotification(
-        "❌ Tu n'as pas assez de points."
-    );
+        afficherNotification(
+            "❌ Tu n'as pas assez de points."
+        );
 
-    return;
-}
+        return;
+    }
+
+    // Mémoriser la position
+    let positionScroll =
+        window.scrollY;
 
     // Retirer 10 points
     retirerPoints(10);
 
-    // Créer la liste si elle n'existe pas
+    // Créer la liste si nécessaire
     if (
         !Array.isArray(
             citationsDebloquees[nom]
@@ -625,7 +706,7 @@ if (points < 10) {
         citationsDebloquees[nom] = [];
     }
 
-    // Ajouter cette citation
+    // Ajouter la citation
     if (
         !citationsDebloquees[nom].includes(index)
     ) {
@@ -639,10 +720,40 @@ if (points < 10) {
     // Fermer la fenêtre
     fermerModalCitationDeblocage();
 
-    // Actualiser la liste
-    ouvrirListeCitations(nom);
+    // ========================================
+    // SI ON EST EN MODE LECTURE
+    // ========================================
+    if (
+    !document
+        .getElementById("lecture")
+        ?.classList.contains("cache")
+) {
 
-    // Message
+    indexCitation = index;
+
+    afficherCitation();
+
+    afficherNotification(
+        "🔓 Citation débloquée ! -10 🪙"
+    );
+
+    return;
+}
+
+    // ========================================
+    // SI ON EST DANS LA LISTE VERTICALE
+    // ========================================
+    ouvrirListeCitations(nom);
+    // Restaurer exactement la position
+    requestAnimationFrame(() => {
+
+        window.scrollTo(
+            0,
+            positionScroll
+        );
+
+    });
+
     afficherNotification(
         "🔓 Citation débloquée ! -10 🪙"
     );
@@ -657,7 +768,6 @@ function debloquerPhilosophe(nom) {
     // Vérifier s'il est déjà débloqué
     if (philosopheEstDebloque(nom)) {
         fermerModalDeblocage();
-        ouvrirListeCitations(nom);
         return;
     }
 
@@ -671,10 +781,14 @@ function debloquerPhilosophe(nom) {
         return;
     }
 
+    // Mémoriser la position
+    let positionScroll =
+        window.scrollY;
+
     // Retirer les 20 points
     retirerPoints(20);
 
-    // Ajouter le philosophe aux philosophes débloqués
+    // Ajouter le philosophe
     philosophesDebloques.push(nom);
 
     // Éviter les doublons
@@ -688,11 +802,18 @@ function debloquerPhilosophe(nom) {
     // Fermer la fenêtre
     fermerModalDeblocage();
 
-    // Actualiser la liste
+    // Actualiser la liste des philosophes
     afficherListePhilosophes();
 
-    // Ouvrir les citations du philosophe
-    ouvrirListeCitations(nom);
+    // Restaurer la position
+    requestAnimationFrame(() => {
+
+        window.scrollTo(
+            0,
+            positionScroll
+        );
+
+    });
 
     // Message
     afficherNotification(
@@ -716,7 +837,9 @@ function ouvrirListeCitations(nom) {
     nomAuteur = nom;
 
     let titre =
-        document.getElementById("titreListeCitations");
+        document.getElementById(
+            "titreListeCitations"
+        );
 
     if (titre) {
         titre.textContent =
@@ -724,7 +847,9 @@ function ouvrirListeCitations(nom) {
     }
 
     let container =
-        document.getElementById("listeCitationsContainer");
+        document.getElementById(
+            "listeCitationsContainer"
+        );
 
     if (!container) {
         return;
@@ -772,6 +897,9 @@ function ouvrirListeCitations(nom) {
             `;
 
             element.onclick = function() {
+
+                window.positionRetourCitations =
+                    window.scrollY;
 
                 if (
                     citationEstDebloquee(
@@ -909,18 +1037,22 @@ function afficherCitation() {
 }
 
 
+
 // ========================================
-// CITATION SUIVANTE
+// CITATION / MESSAGE SUIVANT
 // ========================================
+
 function citationSuivante() {
 
     if (
-        indexCitation >=
-        listeActuelle.length - 1
+        !listeActuelle ||
+        indexCitation >= listeActuelle.length - 1
     ) {
 
+        
+
         afficherNotification(
-            "🏁 Dernière citation"
+            "🏁 Dernier élément"
         );
 
         return;
@@ -929,7 +1061,40 @@ function citationSuivante() {
     let prochainIndex =
         indexCitation + 1;
 
-    // Vérifier si la prochaine citation est débloquée
+    // ========================================
+    // SI ON EST DANS LES MESSAGES
+    // ========================================
+    if (
+        typeof messages !== "undefined" &&
+        messages[nomAuteur] === listeActuelle
+    ) {
+
+        if (
+            !messageEstDebloque(
+                nomAuteur,
+                prochainIndex
+            )
+        ) {
+
+            ouvrirModalDeblocageMessage(
+                nomAuteur,
+                prochainIndex
+            );
+
+            return;
+        }
+
+        indexCitation =
+            prochainIndex;
+
+        afficherMessage();
+
+        return;
+    }
+
+    // ========================================
+    // SI ON EST DANS LES CITATIONS
+    // ========================================
     if (
         !citationEstDebloquee(
             nomAuteur,
@@ -950,10 +1115,8 @@ function citationSuivante() {
 
     afficherCitation();
 }
-
-
 // ========================================
-// CITATION PRÉCÉDENTE
+// ÉLÉMENT PRÉCÉDENT
 // ========================================
 
 function citationPrecedente() {
@@ -961,7 +1124,7 @@ function citationPrecedente() {
     if (indexCitation <= 0) {
 
         afficherNotification(
-            "🏁 Première citation"
+            "🏁 Premier élément"
         );
 
         return;
@@ -969,6 +1132,39 @@ function citationPrecedente() {
 
     let precedentIndex =
         indexCitation - 1;
+
+    // ========================================
+    // SI ON EST DANS LES MESSAGES
+    // ========================================
+
+    if (window.modeLectureMessage === true) {
+
+        if (
+            !messageEstDebloque(
+                nomAuteur,
+                precedentIndex
+            )
+        ) {
+
+            ouvrirModalDeblocageMessage(
+                nomAuteur,
+                precedentIndex
+            );
+
+            return;
+        }
+
+        indexCitation =
+            precedentIndex;
+
+        afficherMessage();
+
+        return;
+    }
+
+    // ========================================
+    // SI ON EST DANS LES CITATIONS
+    // ========================================
 
     if (
         !citationEstDebloquee(
@@ -990,74 +1186,93 @@ function citationPrecedente() {
 
     afficherCitation();
 }
-
-
 // ========================================
 // RETOUR À LA LISTE
 // ========================================
 
 function retourListe() {
 
+    // ========================================
+    // MESSAGES TOUCHANTS
+    // ========================================
+
+    if (
+        nomAuteur &&
+        typeof messages !== "undefined" &&
+        messages[nomAuteur]
+    ) {
+
+        let categorie =
+            nomAuteur;
+
+        let position =
+            window.positionRetourMessages || 0;
+
+        setTimeout(() => {
+
+            ouvrirListeMessages(
+                categorie
+            );
+
+            requestAnimationFrame(() => {
+
+                window.scrollTo(
+                    0,
+                    position
+                );
+
+            });
+
+        }, 50);
+
+        return;
+    }
+
+
+    // ========================================
+    // CITATIONS D'UN PHILOSOPHE
+    // ========================================
+
     if (
         nomAuteur &&
         philosophes[nomAuteur]
     ) {
 
-        ouvrirListeCitations(
-            nomAuteur
-        );
+        let nom =
+            nomAuteur;
 
-    } else {
+        let position =
+            window.positionRetourCitations || 0;
 
-        ouvrirPopulaires();
+        setTimeout(() => {
 
-    }
-}
+            ouvrirListeCitations(
+                nom
+            );
 
-// ========================================
-// POPULAIRES
-// ========================================
+            requestAnimationFrame(() => {
 
-function ouvrirPopulaires() {
+                window.scrollTo(
+                    0,
+                    position
+                );
 
-    cacherPages("populaires");
+            });
 
-    let page =
-        document.getElementById(
-            "populaires"
-        );
-
-    if (page) {
-        page.classList.remove("cache");
-    }
-}
-
-
-function choisirCategorie(categorie) {
-
-    if (
-        typeof populaires === "undefined" ||
-        !populaires[categorie]
-    ) {
-
-        afficherNotification(
-            "Cette catégorie sera bientôt disponible."
-        );
+        }, 50);
 
         return;
     }
 
-    listeActuelle =
-        populaires[categorie];
 
-    indexCitation = 0;
+    // ========================================
+    // RETOUR AUX POPULAIRES
+    // ========================================
 
-    nomAuteur = categorie;
-
-    afficherCitation();
-
-cacherPages("lecture");
+    ouvrirPopulaires();
 }
+
+
 
 
 // ========================================
@@ -1106,6 +1321,578 @@ function ajouterFavori() {
     afficherNotification(
         "❤️ Ajouté aux favoris"
     );
+}
+
+// ========================================
+// MESSAGES TOUCHANTS
+// ========================================
+
+function ouvrirMessages() {
+
+    cacherPages("messages");
+
+}
+
+
+// ========================================
+// MESSAGE DÉBLOQUÉ ?
+// ========================================
+
+function messageEstDebloque(categorie, index) {
+
+    // Les 2 premiers messages sont gratuits
+    if (index < 2) {
+        return true;
+    }
+
+    let stock =
+        localStorage.getItem("messagesDebloques");
+
+    let messagesDebloques = {};
+
+    try {
+        messagesDebloques =
+            JSON.parse(stock) || {};
+    } catch (e) {
+        messagesDebloques = {};
+    }
+
+    if (
+        !Array.isArray(
+            messagesDebloques[categorie]
+        )
+    ) {
+        return false;
+    }
+
+    return messagesDebloques[categorie]
+        .includes(index);
+}
+
+
+// ========================================
+// SAUVEGARDER LES MESSAGES DÉBLOQUÉS
+// ========================================
+
+function sauvegarderMessagesDebloques(
+    messagesDebloques
+) {
+
+    localStorage.setItem(
+        "messagesDebloques",
+        JSON.stringify(
+            messagesDebloques
+        )
+    );
+}
+
+
+// ========================================
+// CHOISIR UNE CATÉGORIE DE MESSAGE
+// ========================================
+
+function choisirCategorieMessage(categorie) {
+
+    if (
+        typeof messages === "undefined" ||
+        !messages[categorie]
+    ) {
+        afficherNotification(
+            "Cette catégorie sera bientôt disponible."
+        );
+        return;
+    }
+
+    // Mémoriser la position dans la liste des catégories
+    window.positionRetourCategoriesMessages =
+        window.scrollY;
+
+    nomAuteur = categorie;
+
+    ouvrirListeMessages(categorie);
+}
+
+// ========================================
+// AFFICHER LA LISTE DES MESSAGES
+// ========================================
+
+function ouvrirListeMessages(categorie) {
+
+    if (
+        typeof messages === "undefined" ||
+        !messages[categorie]
+    ) {
+        return;
+    }
+
+    let titre =
+        document.getElementById(
+            "titreListeMessages"
+        );
+
+    if (titre) {
+
+        titre.textContent =
+            "❤️ " +
+            categorie;
+    }
+
+    let container =
+        document.getElementById(
+            "listeMessagesContainer"
+        );
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+
+    messages[categorie].forEach(
+        (message, index) => {
+
+            let disponible =
+                messageEstDebloque(
+                    categorie,
+                    index
+                );
+console.log("MESSAGE", index, "DÉBLOQUÉ =", disponible);
+            let element =
+                document.createElement("div");
+
+            element.className =
+                disponible
+                    ? "citation-liste"
+                    : "citation-liste verrouille";
+
+            element.innerHTML = `
+
+                <div class="numero-citation">
+                    ${index + 1}
+                </div>
+
+                <div class="texte-citation-liste">
+
+                    ${
+                        disponible
+                        ? "« " + message + " »"
+                        : "🔒 Message verrouillé"
+                    }
+
+                </div>
+
+                <div class="etat-citation">
+
+                    ${
+                        disponible
+                        ? "Lire ➜"
+                        : "🔒 10 🪙 pour débloquer"
+                    }
+
+                </div>
+
+            `;
+
+            element.onclick = function() {
+
+                // Mémoriser exactement
+                // la position du message
+                window.positionRetourMessages =
+                    window.scrollY;
+
+                if (
+                    messageEstDebloque(
+                        categorie,
+                        index
+                    )
+                ) {
+
+                    ouvrirMessage(
+                        categorie,
+                        index
+                    );
+
+                } else {
+
+                    ouvrirModalDeblocageMessage(
+                        categorie,
+                        index
+                    );
+
+                }
+
+            };
+
+            container.appendChild(element);
+
+        }
+    );
+
+    cacherPages("listeMessages");
+}
+
+
+// ========================================
+// MODALE DE DÉBLOCAGE D'UN MESSAGE
+// ========================================
+
+function ouvrirModalDeblocageMessage(
+    categorie,
+    index
+) {
+
+    let ancienneModal =
+        document.getElementById(
+            "modalMessageDeblocage"
+        );
+
+    if (ancienneModal) {
+        ancienneModal.remove();
+    }
+
+    let modal =
+        document.createElement("div");
+
+    modal.id =
+        "modalMessageDeblocage";
+
+    modal.className =
+        "modal";
+
+    modal.innerHTML = `
+
+        <div class="modal-contenu">
+
+            <h2>🔒 Message verrouillé</h2>
+
+            <p>
+                Ce message est verrouillé.
+            </p>
+
+            <p>
+                <strong>
+                    🪙 Prix : 10 points
+                </strong>
+            </p>
+
+            <button
+                onclick="
+                    debloquerMessage(
+                        '${categorie}',
+                        ${index}
+                    )
+                "
+            >
+                🔓 Débloquer
+            </button>
+
+            <button
+                class="btnAnnuler"
+                onclick="
+                    fermerModalDeblocageMessage()
+                "
+            >
+                Annuler
+            </button>
+
+        </div>
+
+    `;
+
+    document.body.appendChild(modal);
+}
+
+
+// ========================================
+// FERMER MODALE MESSAGE
+// ========================================
+
+function fermerModalDeblocageMessage() {
+
+    let modal =
+        document.getElementById(
+            "modalMessageDeblocage"
+        );
+
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// ========================================
+// DÉBLOQUER UN MESSAGE
+// ========================================
+
+function debloquerMessage(
+    categorie,
+    index
+) {console.log(
+    "DÉBLOCAGE MESSAGE → catégorie:",
+    categorie,
+    "index reçu:",
+    index
+);
+
+    if (
+        typeof messages === "undefined" ||
+        !messages[categorie] ||
+        !messages[categorie][index]
+    ) {
+        return;
+    }
+
+    // ========================================
+    // SI DÉJÀ DÉBLOQUÉ
+    // ========================================
+
+    if (
+        messageEstDebloque(
+            categorie,
+            index
+        )
+    ) {
+
+        fermerModalDeblocageMessage();
+
+        ouvrirMessage(
+            categorie,
+            index
+        );
+
+        return;
+    }
+
+    // ========================================
+    // VÉRIFIER LES POINTS
+    // ========================================
+
+    if (points < 10) {
+
+        afficherNotification(
+            "❌ Tu n'as pas assez de points."
+        );
+
+        return;
+    }
+
+    // ========================================
+    // CONSERVER LA POSITION
+    // ========================================
+
+    let positionScroll =
+        window.scrollY;
+
+    // ========================================
+    // RETIRER LES POINTS
+    // ========================================
+
+    retirerPoints(10);
+
+    // ========================================
+    // RÉCUPÉRER LES DÉBLOCAGES
+    // ========================================
+
+    let messagesDebloques = {};
+
+    try {
+
+        messagesDebloques =
+            JSON.parse(
+                localStorage.getItem(
+                    "messagesDebloques"
+                )
+            ) || {};
+
+    } catch (e) {
+
+        messagesDebloques = {};
+
+    }
+
+    if (
+        !Array.isArray(
+            messagesDebloques[categorie]
+        )
+    ) {
+
+        messagesDebloques[categorie] = [];
+
+    }
+
+    if (
+        !messagesDebloques[categorie]
+            .includes(index)
+    ) {
+
+        messagesDebloques[categorie]
+            .push(index);
+
+    }
+
+    sauvegarderMessagesDebloques(
+        messagesDebloques
+    );
+
+    // ========================================
+    // FERMER LA MODALE
+    // ========================================
+
+    fermerModalDeblocageMessage();
+
+    // ========================================
+    // SI ON ÉTAIT EN LECTURE
+    // ========================================
+
+if (
+    !document
+        .getElementById("lecture")
+        ?.classList.contains("cache")
+) {
+
+    nomAuteur = categorie;
+
+    listeActuelle =
+        messages[categorie];
+
+    indexCitation = index;
+
+    afficherMessage();
+
+    afficherNotification(
+        "🔓 Message débloqué ! -10 🪙"
+    );
+
+    return;
+}
+
+    // ========================================
+    // SI ON ÉTAIT DANS LA LISTE
+    // ========================================
+
+    ouvrirListeMessages(categorie);
+
+    requestAnimationFrame(() => {
+
+        window.scrollTo(
+            0,
+            positionScroll
+        );
+
+    });
+
+    afficherNotification(
+        "🔓 Message débloqué ! -10 🪙"
+    );
+}
+// ========================================
+// ACTUALISER L'AFFICHAGE APRÈS DÉBLOCAGE
+// ========================================
+
+function actualiserListeApresDeblocage() {
+
+    if (
+        nomAuteur &&
+        typeof messages !== "undefined" &&
+        messages[nomAuteur]
+    ) {
+
+        ouvrirListeMessages(nomAuteur);
+        return;
+    }
+
+    if (
+        nomAuteur &&
+        typeof philosophes !== "undefined" &&
+        philosophes[nomAuteur]
+    ) {
+
+        ouvrirListeCitations(nomAuteur);
+    }
+}
+// ========================================
+// OUVRIR UN MESSAGE
+// ========================================
+
+function ouvrirMessage(
+    categorie,
+    index
+) {
+
+    if (
+        typeof messages === "undefined" ||
+        !messages[categorie]
+    ) {
+        return;
+    }
+
+    if (
+        !messageEstDebloque(
+            categorie,
+            index
+        )
+    ) {
+
+        ouvrirModalDeblocageMessage(
+            categorie,
+            index
+        );
+
+        return;
+    }
+
+    listeActuelle =
+        messages[categorie];
+window.modeLectureMessage = true;
+    indexCitation =
+        index;
+
+    nomAuteur =
+        categorie;
+
+    afficherMessage();
+
+    cacherPages("lecture");
+}
+
+
+// ========================================
+// AFFICHER UN MESSAGE
+// ========================================
+
+function afficherMessage() {
+
+    if (
+        !listeActuelle ||
+        !listeActuelle[indexCitation]
+    ) {
+        return;
+    }
+
+    let texte =
+        document.getElementById(
+            "citationTexte"
+        );
+
+    let auteur =
+        document.getElementById(
+            "auteur"
+        );
+
+    if (texte) {
+
+        texte.textContent =
+            "« " +
+            listeActuelle[indexCitation] +
+            " »";
+
+    }
+
+    if (auteur) {
+
+        auteur.textContent =
+            "❤️ Message touchant";
+
+    }
 }
 
 
@@ -1414,7 +2201,7 @@ function verifierQuiz(numero) {
 
         resultat.textContent =
             "❌ Mauvaise réponse. C'était " +
-            obtenirNomPhilosophe(
+        obtenirNomPhilosophe(
                 bonneAuteur
             );
 
@@ -1443,8 +2230,6 @@ function reponse2() {
 function reponse3() {
     verifierQuiz(2);
 }
-
-
 // ========================================
 // PARAMÈTRES
 // ========================================
@@ -1510,27 +2295,57 @@ function retourFavoris() {
     retourGlobal();
 }
 
-
 // ========================================
-// NOTIFICATION
+// NOTIFICATION / CONFIRMATION
 // ========================================
 
 function afficherNotification(message) {
 
-    let notif = document.getElementById("notification");
+    // Supprimer une ancienne fenêtre
+    let ancienne =
+        document.getElementById(
+            "notificationConfirmation"
+        );
 
-    if (!notif) {
-        return;
+    if (ancienne) {
+        ancienne.remove();
     }
 
-    notif.textContent = message;
-    notif.style.display = "block";
+    // Créer la fenêtre
+    let modal =
+        document.createElement("div");
 
-    clearTimeout(window.timerNotification);
+    modal.id =
+        "notificationConfirmation";
 
-    window.timerNotification = setTimeout(() => {
-        notif.style.display = "none";
-    }, 2200);
+    modal.className =
+        "modal";
+
+    modal.innerHTML = `
+
+        <div class="modal-contenu">
+
+            <p>
+                ${message}
+            </p>
+
+            <button
+                onclick="
+                    document
+                        .getElementById(
+                            'notificationConfirmation'
+                        )
+                        ?.remove();
+                "
+            >
+                OK
+            </button>
+
+        </div>
+
+    `;
+
+    document.body.appendChild(modal);
 }
 
 
@@ -1576,7 +2391,7 @@ function verifierBonusJournalier() {
 
     if (dernierBonus !== aujourdHui) {
 
-        ajouterPoints(3);
+        ajouterPoints(2);
 
         localStorage.setItem(
             "dernierBonus",
@@ -1605,7 +2420,14 @@ function ouvrirPoints() {
     );
 
 }
+function ouvrirPubPoints() {
 
+    // La publicité récompensée sera appelée ici
+    afficherNotification(
+        "📺 Regarde une vidéo pour gagner des points !"
+    );
+
+}
 
 // ========================================
 // DÉMARRAGE DE L'APPLICATION
@@ -1616,7 +2438,6 @@ document.addEventListener(
     function() {
 
         afficherPoints();
-        verifierBonusJournalier();
 
         // Restaurer le mode sombre
         if (
@@ -1639,102 +2460,246 @@ document.addEventListener(
         if (accueil) {
             accueil.classList.remove("cache");
         }
-
-    }
+   }
 );
-/* ===== LEVELPLAY CITAPLUS ===== */
+// ========================================
+// BONUS QUOTIDIEN
+// ========================================
 
-const CITAPLUS_LEVELPLAY_APP_KEY = "263803aa5";
-const CITAPLUS_REWARDED_ID = "pz9qyhy9o5w4f5nl";
-const CITAPLUS_INTER_ID = "eoqhcju0i13lokda";
-const CITAPLUS_BANNER_ID = "q72hgq9baglmgsg9";
+function obtenirDateBonus() {
+    const maintenant = new Date();
 
-async function initialiserLevelPlay() {
-    try {
-        const LP = window?.LevelPlayAds;
+    const annee = maintenant.getFullYear();
+    const mois = String(maintenant.getMonth() + 1).padStart(2, "0");
+    const jour = String(maintenant.getDate()).padStart(2, "0");
 
-        if (!LP) {
-            console.log("LevelPlay non disponible");
-            return;
-        }
-
-        await LP.requestConsentInfo();
-
-            await LP.addListener("onRewardedAdRewarded", () => { ajouterPoints(10); afficherNotification("🎁 Vidéo récompensée : +10 🪙"); });
-        await LP.initialize({
-            appKey: CITAPLUS_LEVELPLAY_APP_KEY,
-            isTesting: false
-        });
-
-        await LP.loadRewarded({
-            adUnitId: CITAPLUS_REWARDED_ID
-        });
-
-        await LP.loadInterstitial({
-            adUnitId: CITAPLUS_INTER_ID
-        });
-
-        await LP.createBanner({
-            adUnitId: CITAPLUS_BANNER_ID,
-            adSize: "BANNER",
-            position: "BOTTOM",
-            isAutoShow: true,
-            isOverlap: false
-        });
-
-        console.log("✅ LevelPlay initialisé");
-
-    } catch (e) {
-        console.error("❌ LevelPlay :", e);
-    }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    setTimeout(initialiserLevelPlay, 1000);
-});
-
-
-async function regarderPubPourPoints() {
-    const LP = window?.LevelPlayAds;
-    if (!LP) return;
-    await LP.showRewarded();
-}
-
-function ouvrirMessages() {
-
-    cacherPages("messages");
-
-    const page = document.getElementById("messages");
-
-    if (page) {
-        page.classList.remove("cache");
-    }
+    return annee + "-" + mois + "-" + jour;
 }
 
 
-function choisirCategorieMessage(categorie) {
+function bonusQuotidien() {
 
-    if (
-        typeof messages === "undefined" ||
-        !messages[categorie]
-    ) {
+    const aujourdHui = obtenirDateBonus();
 
-        afficherNotification(
-            "Cette catégorie sera bientôt disponible."
+    const dernierBonus =
+        localStorage.getItem("dateDernierBonus");
+
+    // Vérification d'un changement d'heure vers le passé
+    const maintenant = Date.now();
+
+    const derniereHeure = parseInt(
+        localStorage.getItem("heureDernierBonus") || "0"
+    );
+
+    if (derniereHeure > 0 && maintenant < derniereHeure) {
+
+        afficherMessageBonus(
+            "⚠️ Heure modifiée",
+            "L'heure de l'appareil semble avoir été modifiée. Le bonus est temporairement bloqué.",
+            "OK"
         );
 
         return;
     }
 
-    listeActuelle = messages[categorie];
+    // Mémoriser l'heure actuelle
+    localStorage.setItem(
+        "heureDernierBonus",
+        maintenant
+    );
 
-    indexCitation = 0;
+    // Bonus déjà récupéré aujourd'hui
+    if (dernierBonus === aujourdHui) {
 
-    nomAuteur = categorie;
+        afficherMessageBonus(
+            "🎁 Bonus quotidien",
+            "Tu as déjà récupéré ton bonus aujourd'hui. Reviens demain !",
+            "OK"
+        );
 
-    afficherCitation();
+        return;
+    }
 
-    cacherPages("lecture");
+    // Confirmation
+    afficherConfirmationBonus();
 }
 
 
+// ========================================
+// CONFIRMATION DU BONUS
+// ========================================
+
+function afficherConfirmationBonus() {
+
+    const ancienne = document.getElementById("fenetreBonus");
+
+    if (ancienne) {
+        ancienne.remove();
+    }
+
+    const fenetre = document.createElement("div");
+
+    fenetre.id = "fenetreBonus";
+
+    fenetre.innerHTML = `
+        <div class="bonus-overlay">
+
+            <div class="bonus-fenetre">
+
+                <div class="bonus-icone">
+                    🎁
+                </div>
+
+                <h2>Bonus quotidien</h2>
+
+                <p>
+                    Tu peux récupérer
+                    <strong>+3 points</strong>
+                    pour aujourd'hui.
+                </p>
+
+                <div class="bonus-boutons">
+
+                    <button
+                        class="bonus-annuler"
+                        onclick="fermerBonus()">
+                        Annuler
+                    </button>
+
+                    <button
+                        class="bonus-confirmer"
+                        onclick="confirmerBonus()">
+                        Obtenir +3 points
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+    document.body.appendChild(fenetre);
+}
+
+
+// ========================================
+// CONFIRMER LE BONUS
+// ========================================
+
+function confirmerBonus() {
+
+    const aujourdHui = obtenirDateBonus();
+
+    // Double vérification
+    const dernierBonus =
+        localStorage.getItem("dateDernierBonus");
+
+    if (dernierBonus === aujourdHui) {
+
+        fermerBonus();
+
+        afficherMessageBonus(
+            "🎁 Bonus quotidien",
+            "Tu as déjà récupéré ton bonus aujourd'hui. Reviens demain !",
+            "OK"
+        );
+
+        return;
+    }
+
+    // Récupérer les points actuels
+    let points = parseInt(
+        localStorage.getItem("points") || "0"
+    );
+
+    // Ajouter 3 points
+    points += 3;
+
+    // Sauvegarder
+    localStorage.setItem("points", points);
+
+    localStorage.setItem(
+        "dateDernierBonus",
+        aujourdHui
+    );
+
+    localStorage.setItem(
+        "heureDernierBonus",
+        Date.now()
+    );
+
+    fermerBonus();
+
+    // Actualiser l'affichage des points
+    if (typeof afficherPoints === "function") {
+        afficherPoints();
+    }
+
+    // Message de confirmation
+    afficherMessageBonus(
+        "🎉 Bonus obtenu !",
+        "<strong>+3 points</strong> ont été ajoutés à ton compte.",
+        "OK"
+    );
+}
+
+
+// ========================================
+// FERMER LA CONFIRMATION
+// ========================================
+
+function fermerBonus() {
+
+    const fenetre =
+        document.getElementById("fenetreBonus");
+
+    if (fenetre) {
+        fenetre.remove();
+    }
+}
+
+
+// ========================================
+// MESSAGE FINAL
+// ========================================
+
+function afficherMessageBonus(titre, message, bouton) {
+
+    const ancienne =
+        document.getElementById("fenetreBonus");
+
+    if (ancienne) {
+        ancienne.remove();
+    }
+
+    const fenetre = document.createElement("div");
+
+    fenetre.id = "fenetreBonus";
+
+    fenetre.innerHTML = `
+        <div class="bonus-overlay">
+
+            <div class="bonus-fenetre">
+
+                <div class="bonus-icone">
+                    🎁
+                </div>
+
+                <h2>${titre}</h2>
+
+                <p>${message}</p>
+
+                <button
+                    class="bonus-ok"
+                    onclick="fermerBonus()">
+                    ${bouton}
+                </button>
+
+            </div>
+
+        </div>
+    `;
+
+    document.body.appendChild(fenetre);
+}
