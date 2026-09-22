@@ -2610,7 +2610,7 @@ function confirmerBonus() {
 
     // Récupérer les points actuels
     let points = parseInt(
-        localStorage.getItem("points") || "0"
+        localStorage.getItem("points") || "20"
     );
 
     // Ajouter 3 points
